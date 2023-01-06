@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MyLib;
 
-public class MYScripts : GSClass<MYScripts>
+public class GameManager : GSClass<GameManager>
 {
     // Start is called before the first frame update
     void Start()

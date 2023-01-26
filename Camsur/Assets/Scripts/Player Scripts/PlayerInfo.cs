@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UserInfo
+public class PlayerInfo
 {
     public string username;
     public int user_id;
     public bool login;
     public int contact_number;
 
-    public static UserInfo CreateFromJSON(string jsonString)
+    public static PlayerInfo CreateFromJSON(string jsonString)
     {
-        return JsonUtility.FromJson<UserInfo>(jsonString);
+        return JsonUtility.FromJson<PlayerInfo>(jsonString);
     }
 
     // Given JSON input:

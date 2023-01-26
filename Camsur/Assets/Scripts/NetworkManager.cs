@@ -4,6 +4,7 @@ using UnityEngine;
 using MyLib;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : GSClass<NetworkManager>
 {
@@ -18,7 +19,6 @@ public class NetworkManager : GSClass<NetworkManager>
         userN = userName.text;
         passW = Password.text;
         StartCoroutine(Upload("Login", userN, passW, "https://www.tumaogames.com/ci/users/unityLogin"));
-        Debug.Log("working");
     }
 
     IEnumerator Upload(string method, string userN, string passW, string url)
@@ -44,10 +44,12 @@ public class NetworkManager : GSClass<NetworkManager>
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
                 result = www.downloadHandler.text;
-                GameManager.Instance.User = UserInfo.CreateFromJSON(result);
-                Debug.Log(GameManager.Instance.User.username);
+                GameManager.Instance.Player = PlayerInfo.CreateFromJSON(result);
+                if (GameManager.Instance.Player.login)
+                {
+                    SceneManager.LoadScene("PlayerMenuScene");
+                }
             }
         }
     }

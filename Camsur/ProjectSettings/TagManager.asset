@@ -50,6 +50,12 @@ TagManager:
   - name: buildings
     uniqueID: 271376747
     locked: 0
+  - name: walls
+    uniqueID: 4086493815
+    locked: 0
   - name: player
     uniqueID: 2909827355
+    locked: 0
+  - name: collider
+    uniqueID: 2292511533
     locked: 0

@@ -8,7 +8,7 @@ public class GameManager : GSClass<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Debug.Log("helloes");
     }
 
     // Update is called once per frame

@@ -18,18 +18,19 @@ public class NetworkManager : GSClass<NetworkManager>
     public TMP_InputField registerPassword;
     public TMP_InputField confirmPassword;
     public TMP_InputField contactNumber;
+    public TMP_InputField email;
     public MSUIManager ms_UIManager;
 
     public string result;
 
-    public string userN, passW, ruserN, rpassW, confirmPass;
+    public string userN, passW, ruserN, rpassW, confirmPass, mail;
     public int contactNum;
 
     public void Login()
     {
         userN = userName.text;
         passW = Password.text;
-        StartCoroutine(Upload("Login", userN, passW, "", 0, "https://www.tumaogames.com/ci/users/unityLogin"));
+        StartCoroutine(Upload("Login", userN, passW, "", 0, "", "https://www.tumaogames.com/ci/users/unityLogin"));
     }
 
     public void Register()
@@ -37,11 +38,12 @@ public class NetworkManager : GSClass<NetworkManager>
         ruserN = registerUserName.text;
         rpassW = registerPassword.text;
         confirmPass = confirmPassword.text;
+        mail = email.text;
         contactNum = int.Parse(contactNumber.text);
-        StartCoroutine(Upload("Register", ruserN, rpassW, confirmPass, contactNum, "https://www.tumaogames.com/ci/users/unityLogin"));
+        StartCoroutine(Upload("Register", ruserN, rpassW, confirmPass, contactNum, mail, "https://www.tumaogames.com/ci/users/unityRegister"));
     }
 
-    IEnumerator Upload(string method, string userN, string passW, string confirmPass, int contactNumber, string url)
+    IEnumerator Upload(string method, string userN, string passW, string confirmPass, int contactNumber, string mail, string url)
     { 
         WWWForm form = new WWWForm();
         switch (method)
@@ -53,8 +55,9 @@ public class NetworkManager : GSClass<NetworkManager>
             case "Register":
                 form.AddField("username", userN);
                 form.AddField("password", passW);
-                form.AddField("confirm_password", confirmPass);
+                form.AddField("password_again", confirmPass);
                 form.AddField("contact_number", contactNumber);
+                form.AddField("email", mail);
                 break;
             default:
                 // code block
@@ -86,11 +89,12 @@ public class NetworkManager : GSClass<NetworkManager>
                         break;
                     case "Register":
                         result = www.downloadHandler.text;
-                        GameManager.Instance.Player = PlayerInfo.CreateFromJSON(result);
+                        /*GameManager.Instance.Player = PlayerInfo.CreateFromJSON(result);
                         if (GameManager.Instance.Player.login)
                         {
                             SceneManager.LoadScene("PlayerMenuScene");
-                        }
+                        }*/
+                        Debug.Log(result);
                         break;
                     default:
                         // code block

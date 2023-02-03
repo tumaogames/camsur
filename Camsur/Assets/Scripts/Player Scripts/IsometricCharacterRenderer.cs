@@ -72,11 +72,6 @@ public class IsometricCharacterRenderer : MonoBehaviour
     }
 
 
-
-
-
-
-
     //this function converts a string array to a int (animator hash) array.
     public static int[] AnimatorStringArrayToHashArray(string[] animationArray)
     {

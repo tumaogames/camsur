@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MyLib;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -49,6 +48,7 @@ public class NetworkManager : GSClass<NetworkManager>
         switch (method)
         {
             case "Login":
+                ms_UIManager.ShowLoadingImage();
                 form.AddField("username", userN);
                 form.AddField("password", passW);
                 break;

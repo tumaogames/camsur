@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Facebook.Unity;
+using UnityEngine.SceneManagement;
+using Newtonsoft.Json;
 
 public class FacebookController : MonoBehaviour
 {
@@ -54,9 +56,22 @@ public class FacebookController : MonoBehaviour
         }
     }
 
-    void DisplayUsername(IResult result)
+    public void DisplayUsername(IResult result)
     {
-        Debug.Log(result.ResultDictionary["first_name"]);
+        string name = (string)result.ResultDictionary["first_name"];
+        var player = new PlayerInfo()
+        {
+            username = name,
+            user_id = 0100,
+            login = true,
+            contact_number = 0
+        };
+
+        var Jplayer = JsonConvert.SerializeObject(player);
+
+        GameManager.Instance.Player = PlayerInfo.CreateFromJSON(Jplayer);
+        
+        SceneManager.LoadScene("PlayerMenuScene");
     }
 
 }

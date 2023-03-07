@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MSUIManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class MSUIManager : MonoBehaviour
     public GameObject loginMenu;
     public GameObject registerMenu;
     public TMP_Text errorMessage;
+    public Image loadingImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +33,10 @@ public class MSUIManager : MonoBehaviour
     {
         registerMenu.SetActive(false);
         loginMenu.SetActive(true);
+    }
+
+    public void ShowLoadingImage()
+    {
+        loadingImage.gameObject.SetActive(true);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon;
 
 
 public class IsometricCharacterRenderer : MonoBehaviour
@@ -11,6 +13,7 @@ public class IsometricCharacterRenderer : MonoBehaviour
 
     Animator animator;
     int lastDirection;
+    public string AnimName;
 
     private void Awake()
     {
@@ -20,7 +23,7 @@ public class IsometricCharacterRenderer : MonoBehaviour
 
 
     public void SetDirection(Vector2 direction){
-
+        animator.SetBool(AnimName, false);
         //use the Run states by default
         string[] directionArray = null;
 
@@ -40,8 +43,20 @@ public class IsometricCharacterRenderer : MonoBehaviour
             lastDirection = DirectionToIndex(direction, 8);
         }
 
+
+        /*if ((directionArray == runDirections) && (direction.magnitude < .01f))
+        {
+            animator.SetBool(directionArray[lastDirection], true);
+        } else
+        {
+            animator.SetBool(directionArray[lastDirection], false);
+        }*/
+
+
         //tell the animator to play the requested state
-        animator.Play(directionArray[lastDirection]);
+        //animator.Play(directionArray[lastDirection]);
+        animator.SetBool(directionArray[lastDirection], true);
+        AnimName = directionArray[lastDirection];
     }
 
     //helper functions
@@ -86,5 +101,4 @@ public class IsometricCharacterRenderer : MonoBehaviour
         //we're done!
         return hashArray;
     }
-
 }

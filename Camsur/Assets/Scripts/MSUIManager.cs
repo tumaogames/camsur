@@ -9,8 +9,10 @@ public class MSUIManager : MonoBehaviour
     public TMP_Text register;
     public GameObject loginMenu;
     public GameObject registerMenu;
-    public TMP_Text errorMessage;
-    public Image loadingImage;
+    public TMP_Text LoginErrorMessage;
+    public TMP_Text RegisterErrorMessage;
+    public Image LoginLoadingImage;
+    public Image RegisterLoadingImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +37,13 @@ public class MSUIManager : MonoBehaviour
         loginMenu.SetActive(true);
     }
 
-    public void ShowLoadingImage()
+    public void ShowLoginLoadingImage(bool data = true)
     {
-        loadingImage.gameObject.SetActive(true);
+        LoginLoadingImage.gameObject.SetActive(data);
+    }
+
+    public void ShowRegisterLoadingImage(bool data = true)
+    {
+        RegisterLoadingImage.gameObject.SetActive(data);
     }
 }

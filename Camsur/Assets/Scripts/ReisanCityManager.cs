@@ -4,8 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class ReisanCityManager : MonoBehaviour
+public class ReisanCityManager : MonoBehaviourPun
 {
     public Image home;
     // Start is called before the first frame update
@@ -22,6 +23,7 @@ public class ReisanCityManager : MonoBehaviour
 
     public void ReturnHome()
     {
+        if (!photonView.IsMine) return;
         SceneManager.LoadScene("MenuScene");
     }
 }

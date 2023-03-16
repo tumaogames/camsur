@@ -9,6 +9,7 @@ public class PlayerInfo
     public int user_id;
     public bool login;
     public int contact_number;
+    public int score;
 
     public static PlayerInfo CreateFromJSON(string jsonString)
     {

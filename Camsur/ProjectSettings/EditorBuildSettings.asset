@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ReisanFeild01.unity
     guid: 43d421b0b9252f9408963cbd5a97a50d
+  - enabled: 1
+    path: Assets/Scenes/FlamingSunbird Minigame.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

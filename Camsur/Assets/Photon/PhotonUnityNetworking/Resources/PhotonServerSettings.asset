@@ -15,7 +15,7 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: 0a4f60e0-0012-4921-9d49-60ac116f3eef
     AppIdFusion: 
-    AppIdChat: 
+    AppIdChat: 7c9e9a42-4f21-480f-b73f-fe15596fe0e6
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
@@ -27,8 +27,8 @@ MonoBehaviour:
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 1
-    NetworkLogging: 1
-  DevRegion: sa
+    NetworkLogging: 0
+  DevRegion: asia
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -39,6 +39,9 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - SetPosition
+  - ChatMessage
+  - AddChat
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

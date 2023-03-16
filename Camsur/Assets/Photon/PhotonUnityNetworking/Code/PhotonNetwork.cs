@@ -1921,6 +1921,7 @@ namespace Photon.Pun
                 return false;
             }
 
+
             EnterRoomParams opParams = new EnterRoomParams();
             opParams.RoomName = roomName;
             opParams.ExpectedUsers = expectedUsers;

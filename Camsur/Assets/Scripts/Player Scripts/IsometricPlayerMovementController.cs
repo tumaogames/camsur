@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon;
+using TMPro;
 
 public class IsometricPlayerMovementController : MonoBehaviourPun
 {
     public PhotonView view;
-
     public float movementSpeed = 1f;
     IsometricCharacterRenderer isoRenderer;
     public Camera cam;
+    public Vector2 movement;
 
     Rigidbody2D rbody;
 
@@ -28,17 +29,20 @@ public class IsometricPlayerMovementController : MonoBehaviourPun
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (view.IsMine)
+        if (view.IsMine && !NPC.OpenDialogueBox)
         {
             Vector2 currentPos = rbody.position;
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
             Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
             inputVector = Vector2.ClampMagnitude(inputVector, 1);
-            Vector2 movement = inputVector * movementSpeed;
+            movement = inputVector * movementSpeed;
             Vector2 newPos = currentPos + movement * Time.fixedDeltaTime;
             isoRenderer.SetDirection(movement);
-            rbody.MovePosition(newPos);
+            if (!ChatReturnInput.Instance.typing)
+            {
+                rbody.MovePosition(newPos);
+            }
         }
     }
 }

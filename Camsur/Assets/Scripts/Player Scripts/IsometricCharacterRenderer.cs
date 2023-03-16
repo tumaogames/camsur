@@ -14,6 +14,8 @@ public class IsometricCharacterRenderer : MonoBehaviour
     Animator animator;
     int lastDirection;
     public string AnimName;
+    //use the Run states by default
+    
 
     private void Awake()
     {
@@ -24,11 +26,10 @@ public class IsometricCharacterRenderer : MonoBehaviour
 
     public void SetDirection(Vector2 direction){
         animator.SetBool(AnimName, false);
-        //use the Run states by default
         string[] directionArray = null;
 
         //measure the magnitude of the input.
-        if (direction.magnitude < .01f)
+        if (direction.magnitude < .01f || ChatReturnInput.Instance.typing)
         {
             //if we are basically standing still, we'll use the Static states
             //we won't be able to calculate a direction if the user isn't pressing one, anyway!
@@ -42,19 +43,7 @@ public class IsometricCharacterRenderer : MonoBehaviour
             directionArray = runDirections;
             lastDirection = DirectionToIndex(direction, 8);
         }
-
-
-        /*if ((directionArray == runDirections) && (direction.magnitude < .01f))
-        {
-            animator.SetBool(directionArray[lastDirection], true);
-        } else
-        {
-            animator.SetBool(directionArray[lastDirection], false);
-        }*/
-
-
         //tell the animator to play the requested state
-        //animator.Play(directionArray[lastDirection]);
         animator.SetBool(directionArray[lastDirection], true);
         AnimName = directionArray[lastDirection];
     }
@@ -85,7 +74,6 @@ public class IsometricCharacterRenderer : MonoBehaviour
         //round it, and we have the answer!
         return Mathf.FloorToInt(stepCount);
     }
-
 
     //this function converts a string array to a int (animator hash) array.
     public static int[] AnimatorStringArrayToHashArray(string[] animationArray)

@@ -23,7 +23,7 @@ public class NetworkManager : GSClass<NetworkManager>
 
     public string result;
 
-    public string userN, passW, ruserN, rpassW, confirmPass, mail, contactNum;
+    public string userN, passW, ruserN, rpassW, confirmPass, mail, contactNum, score, suserN;
 
     public void Login()
     {
@@ -179,7 +179,4 @@ public class NetworkManager : GSClass<NetworkManager>
             }
         }
     }
-
-
-
 }

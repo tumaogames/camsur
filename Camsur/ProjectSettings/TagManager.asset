@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Background
+  - Top
+  - Player
   - 
   - 
   - 
@@ -58,4 +58,10 @@ TagManager:
     locked: 0
   - name: collider
     uniqueID: 2292511533
+    locked: 0
+  - name: background
+    uniqueID: 2480288451
+    locked: 0
+  - name: top
+    uniqueID: 697643947
     locked: 0

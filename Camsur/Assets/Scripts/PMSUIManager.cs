@@ -43,7 +43,7 @@ public class PMSUIManager : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-
-        SceneManager.LoadScene("ReisanCity");
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.LoadLevel("ReisanCity");
     }
 }

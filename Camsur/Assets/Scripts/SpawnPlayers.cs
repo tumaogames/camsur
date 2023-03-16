@@ -21,5 +21,6 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
         GameObject myPlayerGo = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
         //((MonoBehaviour)myPlayerGo.GetComponent("IsometricPlayerMovementController")).enabled = true;
         standByCamera.gameObject.SetActive(false);
+        GameManager.Instance.myPlayer = myPlayerGo;
     }
 }

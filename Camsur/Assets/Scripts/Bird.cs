@@ -5,6 +5,7 @@ public class Bird : MonoBehaviour
 {
     public static event Action OnDeath;
     public static event Action OnScore;
+    public static bool dead;
 
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private float _force;
@@ -17,7 +18,7 @@ public class Bird : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 1f;
+        dead = false;
     }
 
     private void Update()
@@ -33,8 +34,8 @@ public class Bird : MonoBehaviour
         OnDeath?.Invoke();
 
         _audioSource.PlayOneShot(_hitSound);
-
-        Time.timeScale = 0f;
+        dead = true;
+        //Time.timeScale = 0f;
     }
 
     private void OnTriggerEnter2D()
@@ -46,9 +47,12 @@ public class Bird : MonoBehaviour
 
     private void Flap()
     {
-        _rigidbody.velocity = Vector2.zero;
-        _rigidbody.AddForce(Vector2.up * _force);
+        if (!dead)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.AddForce(Vector2.up * _force);
 
-        _audioSource.PlayOneShot(_flapSound);
+            _audioSource.PlayOneShot(_flapSound);
+        }
     }
 }

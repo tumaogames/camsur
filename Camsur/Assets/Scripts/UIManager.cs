@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _playButton;
     [SerializeField] private TMP_Text _score;
+    [SerializeField]
+    GameObject[] rootObjects;
 
     void Start()
     {
@@ -16,9 +18,6 @@ public class UIManager : MonoBehaviour
 
     public void Starting()
     {
-        // Switch to 640 x 480 full-screen
-        Screen.SetResolution(1080, 2400, false);
-
     }
 
     private void Awake()
@@ -37,9 +36,24 @@ public class UIManager : MonoBehaviour
         Bird.OnDeath -= OnGMSScore;
     }
 
-    public void RestartGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    public void RestartGame()
+    {
+        SceneManager.UnloadSceneAsync("FlamingSunbird Minigame");
+        rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
 
-    private void OnGameOver() => _playButton.SetActive(true);
+        foreach (GameObject obj in rootObjects)
+        {
+            if (obj.tag != "DontDestroy")
+                obj.SetActive(false);
+        }
+        SceneManager.LoadScene("FlamingSunbird Minigame", LoadSceneMode.Additive);
+        Bird.dead = false;
+    }
+
+    private void OnGameOver()
+    {
+        _playButton.SetActive(true);
+    }
 
     private void OnScore() => _score.text = (int.Parse(_score.text) + 1).ToString();
     private void OnGMSScore() => GameManager.Instance.FlappyScore = Int32.Parse(_score.text);

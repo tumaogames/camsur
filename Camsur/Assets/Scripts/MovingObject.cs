@@ -7,11 +7,14 @@ public class MovingObject : MonoBehaviour
 
     private void Update()
     {
-        this.transform.position -= Vector3.right * _speed * Time.deltaTime;
-
-        if (this.transform.position.x < _xBound)
+        if (!Bird.dead)
         {
-            Destroy(this.gameObject);
+            this.transform.position -= Vector3.right * _speed * Time.deltaTime;
+
+            if (this.transform.position.x < _xBound)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ public class IsometricPlayerMovementController : MonoBehaviourPun
             movement = inputVector * movementSpeed;
             Vector2 newPos = currentPos + movement * Time.fixedDeltaTime;
             isoRenderer.SetDirection(movement);
-            if (!ChatReturnInput.Instance.typing)
+            if (!ChatManager.Instance.typing)
             {
                 rbody.MovePosition(newPos);
             }

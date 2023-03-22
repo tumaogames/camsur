@@ -1325,6 +1325,8 @@ MonoBehaviour:
   confirmPass: 
   mail: 
   contactNum: 
+  score: 
+  suserN: 
 --- !u!1 &220100738
 GameObject:
   m_ObjectHideFlags: 0
@@ -5698,6 +5700,8 @@ MonoBehaviour:
     user_id: 0
     login: 0
     contact_number: 0
+    score: 0
+  FlappyScore: 0
 --- !u!1 &1832779383
 GameObject:
   m_ObjectHideFlags: 0

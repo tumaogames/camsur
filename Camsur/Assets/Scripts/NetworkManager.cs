@@ -67,6 +67,7 @@ public class NetworkManager : GSClass<NetworkManager>
                     {
                         SceneManager.LoadScene("PlayerMenuScene");
                     }
+                    Debug.Log("pass test");
                 }
                 else
                 {

@@ -23,7 +23,7 @@ public class GoogleController : MonoBehaviour
     private static extern void OpenOAuthInExternalTab(string url, string callbackFunctionName);
     public void Login(string callbackFunctionName)
     {
-        var redirectUri = "https://camsurverse.unligames.com";
+        var redirectUri = "https://camsurverse.com";
         var url = "https://accounts.google.com/o/oauth2/v2/auth"
                 + $"?client_id={clientId}"
                 + "&response_type=token"

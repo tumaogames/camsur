@@ -29,7 +29,7 @@ public class IsometricCharacterRenderer : MonoBehaviour
         string[] directionArray = null;
 
         //measure the magnitude of the input.
-        if (direction.magnitude < .01f || ChatReturnInput.Instance.typing)
+        if (direction.magnitude < .01f || ChatManager.Instance.typing)
         {
             //if we are basically standing still, we'll use the Static states
             //we won't be able to calculate a direction if the user isn't pressing one, anyway!

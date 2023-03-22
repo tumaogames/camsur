@@ -11,10 +11,11 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
     /// &lt;/summary&gt;
     string gameVersion = "1";
+    public static bool onConnectedtoMaster;
     // Start is called before the first frame update
     private void Start()
     {
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnectedAndReady)
         {
             // #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
             PhotonNetwork.JoinRoom("MainRoom");
@@ -48,6 +49,7 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
+        onConnectedtoMaster = true;
     }
 
 

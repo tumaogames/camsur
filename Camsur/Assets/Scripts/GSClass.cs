@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
-using System.Collections;
+using Photon.Pun;
 
-public class GSClass<T> : MonoBehaviour where T : Component
+public class GSClass<T> : MonoBehaviourPunCallbacks where T : Component
 {
     private static T instance;
     public static T Instance

@@ -1,7 +1,3 @@
-//Attach this script to your Canvas GameObject.
-//Also attach a GraphicsRaycaster component to your canvas by clicking the Add Component button in the Inspector window.
-//Also make sure you have an EventSystem in your hierarchy.
-
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;

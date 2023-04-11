@@ -3,12 +3,11 @@ guid: 5abfb0a229c98b3499cffa6c59c2ffb4
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
-  forceTextureCase: -2
+  fontSize: 300
+  forceTextureCase: -1
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Jura
   fontNames:
   - Jura
   fallbackFontReferences:

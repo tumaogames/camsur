@@ -221,8 +221,8 @@ GameObject:
   - component: {fileID: 722085131}
   - component: {fileID: 2728902031621368844}
   - component: {fileID: 1988787539}
-  - component: {fileID: 6316962790139133837}
   - component: {fileID: 8608817415192368365}
+  - component: {fileID: 7862455827343440016}
   m_Layer: 8
   m_Name: BoyRenderer
   m_TagString: Player
@@ -340,7 +340,7 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: 722085130}
-  - {fileID: 6316962790139133837}
+  - {fileID: 7862455827343440016}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -426,6 +426,8 @@ MonoBehaviour:
   movementSpeed: 1
   cam: {fileID: 6729357607378478843}
   movement: {x: 0, y: 0}
+  isOnAndroid: 0
+  rightController: {fileID: 0}
 --- !u!50 &2728902031621368844
 Rigidbody2D:
   serializedVersion: 4
@@ -463,22 +465,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &6316962790139133837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5587154496709472992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &8608817415192368365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +478,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimName: 
+--- !u!114 &7862455827343440016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5587154496709472992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 1
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &5587154496713735030
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,10 +601,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8879632749351732812}
   - component: {fileID: 6729357607378478843}
-  - component: {fileID: 4007572594027891155}
   - component: {fileID: 6486219258489640746}
   - component: {fileID: 8948062455441292909}
   - component: {fileID: 5163171087407004736}
+  - component: {fileID: 5270710742590070079}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -651,14 +670,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4007572594027891155
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7685619056333850431}
-  m_Enabled: 1
 --- !u!114 &6486219258489640746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,3 +720,23 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5270710742590070079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685619056333850431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 64
+  m_RefResolutionX: 640
+  m_RefResolutionY: 360
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0

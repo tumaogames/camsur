@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
-using Photon;
-using TMPro;
 
 public class IsometricPlayerMovementController : MonoBehaviourPun
 {
@@ -12,12 +8,21 @@ public class IsometricPlayerMovementController : MonoBehaviourPun
     IsometricCharacterRenderer isoRenderer;
     public Camera cam;
     public Vector2 movement;
+    public bool isOnAndroid;
+    float horizontalInput;
+    float verticalInput;
+    public SimpleTouchController rightController;
 
     Rigidbody2D rbody;
 
     private void Start()
     {
         view = GetComponent<PhotonView>();
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            isOnAndroid = true;
+            rightController = GameObject.Find("SimpleTouch Joystick").GetComponent<SimpleTouchController>();
+        }
     }
 
     private void Awake()
@@ -32,8 +37,16 @@ public class IsometricPlayerMovementController : MonoBehaviourPun
         if (view.IsMine && !NPC.OpenDialogueBox)
         {
             Vector2 currentPos = rbody.position;
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
+            if (!isOnAndroid)
+            {
+                horizontalInput = Input.GetAxis("Horizontal");
+                verticalInput = Input.GetAxis("Vertical");
+            }
+            else
+            {
+                horizontalInput = rightController.GetTouchPosition.x;
+                verticalInput = rightController.GetTouchPosition.y;
+            }
             Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
             inputVector = Vector2.ClampMagnitude(inputVector, 1);
             movement = inputVector * movementSpeed;

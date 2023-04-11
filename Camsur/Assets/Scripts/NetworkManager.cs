@@ -1,12 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Text;
 
 public class NetworkManager : GSClass<NetworkManager>
 {
@@ -23,7 +19,7 @@ public class NetworkManager : GSClass<NetworkManager>
 
     public string result;
 
-    public string userN, passW, ruserN, rpassW, confirmPass, mail, contactNum, score, suserN;
+    public string userN, passW, ruserN, rpassW, confirmPass, mail, contactNum, score, suserN, loginMethod;
 
     public void Login()
     {
@@ -39,7 +35,19 @@ public class NetworkManager : GSClass<NetworkManager>
         confirmPass = confirmPassword.text;
         mail = email.text;
         contactNum = contactNumber.text;
-        StartCoroutine(RegisterUpload(ruserN, rpassW, confirmPass, mail, contactNum, "https://www.tumaogames.com/ci/users/unityRegister"));
+        loginMethod = "normal";
+        StartCoroutine(RegisterUpload(ruserN, rpassW, confirmPass, mail, contactNum, "https://www.tumaogames.com/ci/users/unityRegister", loginMethod));
+    }
+
+    public void SocialMediaRegister(string socialMediaUsername, string method)
+    {
+        ruserN = socialMediaUsername;
+        rpassW = "nopass";
+        confirmPass = "nopass";
+        mail = "noemail@anon.com";
+        contactNum = "09480599808";
+        loginMethod = method;
+        StartCoroutine(RegisterUpload(ruserN, rpassW, confirmPass, mail, contactNum, "https://www.tumaogames.com/ci/users/unityRegister", loginMethod));
     }
 
     IEnumerator LoginUpload(string userN, string passW, string url)
@@ -79,16 +87,19 @@ public class NetworkManager : GSClass<NetworkManager>
     }
 
 
-    IEnumerator RegisterUpload(string ruserN, string rpassW, string confirmPass, string mail, string contactNumber, string url)
+    IEnumerator RegisterUpload(string ruserN, string rpassW, string confirmPass, string mail, string contactNumber, string url, string loginMethod)
     {
         WWWForm form = new WWWForm();
-
-                ms_UIManager.ShowRegisterLoadingImage();
+                if (loginMethod == "normal")
+                {
+                    ms_UIManager.ShowRegisterLoadingImage();
+                }
                 form.AddField("username", ruserN);
                 form.AddField("password", rpassW);
                 form.AddField("password_again", confirmPass);
                 form.AddField("contact_number", contactNumber);
                 form.AddField("email", mail);
+                form.AddField("login_method", loginMethod);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
@@ -106,8 +117,11 @@ public class NetworkManager : GSClass<NetworkManager>
                 {
                     SceneManager.LoadScene("PlayerMenuScene");
                 }*/
-                ms_UIManager.RegisterErrorMessage.text = result;
-                ms_UIManager.ShowRegisterLoadingImage(false);
+                if(loginMethod == "normal")
+                {
+                    ms_UIManager.RegisterErrorMessage.text = result;
+                    ms_UIManager.ShowRegisterLoadingImage(false);
+                }
             }
         }
     }

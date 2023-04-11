@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Chat;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ChatManager : GSClass<ChatManager>, IChatClientListener
 {
@@ -13,7 +14,7 @@ public class ChatManager : GSClass<ChatManager>, IChatClientListener
     [SerializeField] string currentChat;
     ChatClient chatClient;
     public bool isConnected;
-    public TMP_Text chatDisplay;
+    public Text chatDisplay;
     public TMP_InputField inputField;
     public Canvas myCanvas;
     public Transform chatOrigin;
@@ -114,7 +115,6 @@ public class ChatManager : GSClass<ChatManager>, IChatClientListener
     {
         //throw new System.NotImplementedException();
     }
-
     // Start is called before the first frame update
     void Start()
     {

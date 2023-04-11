@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
@@ -33,13 +31,15 @@ public class GoogleController : MonoBehaviour
     }
     public void callbackFunctionName(string res)
     {
+        GoogleUser googleuser = GoogleUser.CreateFromJSON(res);
         var player = new PlayerInfo()
         {
-            username = res,
+            username = googleuser.given_name,
             user_id = 0100,
             login = true,
             contact_number = 0
         };
+        NetworkManager.Instance.SocialMediaRegister(googleuser.given_name, "Google");
         var Jplayer = JsonConvert.SerializeObject(player);
 
         GameManager.Instance.Player = PlayerInfo.CreateFromJSON(Jplayer);

@@ -1,24 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using System.Linq;
 using Photon.Realtime;
 
-public class MultiplayerManager : MonoBehaviourPunCallbacks
+public class MultiplayerManager : MonoBehaviourPunCallbacks, IConnectionCallbacks
 {
-    /// &lt;summary&gt;
-    /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
-    /// &lt;/summary&gt;
+    LoadBalancingClient loadBalancingClient;
+    AppSettings appSettings = new AppSettings();
+    private const string ROOM_NAME = "MainRoom";
+    private const float RECONNECT_INTERVAL = 5f;
+
     string gameVersion = "1";
     public static bool onConnectedtoMaster;
+
     // Start is called before the first frame update
     private void Start()
     {
         if (PhotonNetwork.IsConnectedAndReady)
         {
             // #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
-            PhotonNetwork.JoinRoom("MainRoom");
+            PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions { MaxPlayers = 6 }, null);
         }
         else
         {
@@ -28,34 +29,75 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Awake()
-    {
-        // #Critical
-        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
     public override void OnConnectedToMaster()
     {
-        Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-        PhotonNetwork.JoinLobby();
+        try
+        {
+            loadBalancingClient = new LoadBalancingClient();
+            LoadBalancingPeer loadBalancingPeer = (LoadBalancingPeer)loadBalancingClient.LoadBalancingPeer;
+            loadBalancingPeer.MaximumTransferUnit = 500;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Failed to initialize LoadBalancingClient: " + ex.Message);
+        }
+        onConnectedtoMaster = true;
+        Debug.Log("Connected to master server.");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
+        Debug.LogError("Disconnected from server: " + cause.ToString());
+
+        StartCoroutine(Reconnect());
+        if (this.CanRecoverFromDisconnect(cause))
+        {
+            this.Recover();
+        }
     }
 
-    public override void OnJoinedLobby()
+    IEnumerator Reconnect()
     {
-        Debug.Log("joined lobby");
-        onConnectedtoMaster = true;
+        yield return new WaitForSeconds(RECONNECT_INTERVAL);
+
+        if (!PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+        {
+            PhotonNetwork.JoinRoom(ROOM_NAME);
+        }
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private bool CanRecoverFromDisconnect(DisconnectCause cause)
     {
-        
+        switch (cause)
+        {
+            // the list here may be non exhaustive and is subject to review
+            case DisconnectCause.Exception:
+            case DisconnectCause.ServerTimeout:
+            case DisconnectCause.ClientTimeout:
+            case DisconnectCause.DisconnectByServerLogic:
+            case DisconnectCause.DisconnectByServerReasonUnknown:
+                return true;
+        }
+        return false;
+    }
+
+    private void Recover()
+    {
+        if (!loadBalancingClient.ReconnectAndRejoin())
+        {
+            Debug.LogError("ReconnectAndRejoin failed, trying Reconnect");
+            if (!loadBalancingClient.ReconnectToMaster())
+            {
+                Debug.LogError("Reconnect failed, trying ConnectUsingSettings");
+                if (!loadBalancingClient.ConnectUsingSettings(appSettings))
+                {
+                    Debug.LogError("ConnectUsingSettings failed");
+                }
+            }
+        }
     }
 }

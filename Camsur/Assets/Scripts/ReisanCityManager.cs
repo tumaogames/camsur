@@ -1,22 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Photon.Pun;
-using Photon.Realtime;
 
 public class ReisanCityManager : MonoBehaviourPunCallbacks
 {
     public Image home;
-    PhotonView PBV;
     public GameObject ChatManager;
+    public SimpleTouchController rightController;
     // Start is called before the first frame update
     void Start()
     {
-        PBV = GetComponent<PhotonView>();
         ChatManager = GameObject.Find("ChatManager");
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            rightController.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -27,12 +26,7 @@ public class ReisanCityManager : MonoBehaviourPunCallbacks
 
     public void ReturnHome()
     {
-        if (!PBV.IsMine)
-        {
-            return;
-        }
-        LeaveRoom();
-        
+        LeaveRoom(); 
     }
 
     public void LeaveRoom()
@@ -42,6 +36,11 @@ public class ReisanCityManager : MonoBehaviourPunCallbacks
         if (AudioManager.Instance) Destroy(GameManager.Instance.gameObject);
         Destroy(ChatManager);
         StartCoroutine(DoSwitchLevel());
+    }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("player left");
     }
 
     IEnumerator DoSwitchLevel()

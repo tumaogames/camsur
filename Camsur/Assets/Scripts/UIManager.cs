@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
     public void SetScore()
     {
         string suserN = GameManager.Instance.Player.username;
-        if(Int32.Parse(_score.text) > GameManager.Instance.Player.score)
+        if(GameManager.Instance.FlappyScore > GameManager.Instance.Player.score)
         {
             string score = _score.text;
             Debug.Log(score);

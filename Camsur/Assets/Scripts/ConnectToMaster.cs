@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
-using System.Linq;
-using Photon.Realtime;
 
 public class ConnectToMaster : MonoBehaviourPunCallbacks
 {

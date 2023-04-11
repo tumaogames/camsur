@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Photon.Pun;
-using Photon;
 using Photon.Realtime;
-using System;
+using System.Collections.Generic;
 
 public class PMSUIManager : MonoBehaviourPunCallbacks
 {
@@ -19,12 +14,14 @@ public class PMSUIManager : MonoBehaviourPunCallbacks
     public Image loadingImage;
     string gameVersion = "1";
     public Button startGame;
+    private const string ROOM_NAME = "MainRoom";
 
     // Start is called before the first frame update
     void Start()
     {
         username.text = GameManager.Instance.Player.username.ToString();
         InvokeRepeating("ButtonStartActivate", 0.3f, 0.3f);
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     private void ButtonStartActivate()
@@ -38,22 +35,27 @@ public class PMSUIManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+
     }
 
     private void Awake()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+
     }
 
     public void StartGame()
     {
         loadingImage.gameObject.SetActive(true);
-        PhotonNetwork.JoinOrCreateRoom("MainRoom", new RoomOptions { MaxPlayers = 6 }, null);
+        PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions { MaxPlayers = 6 }, null);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Masterclient");
+        }
+        
     }
 
-    public override void OnCreatedRoom()
+    public override void OnJoinedRoom()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel("ReisanCity");
     }
 }

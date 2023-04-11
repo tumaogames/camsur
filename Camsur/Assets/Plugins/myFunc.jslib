@@ -1,7 +1,7 @@
 mergeInto(LibraryManager.library, {
   OpenOAuthInExternalTab: function (url, callback) {
-    var urlString = Pointer_stringify(url);
-    var callbackString = Pointer_stringify(callback);
+    var urlString = UTF8ToString(url);
+    var callbackString = UTF8ToString(callback);
 
     var child = window.open(urlString, "Popup Window", "width=600,height=600");
     var interval = setInterval(function() {
@@ -38,10 +38,10 @@ mergeInto(LibraryManager.library, {
 			})
 			.then(response => response.json())
 			.then(response => {
-			var res = JSON.stringify(response);
-			console.log("access_token: " + accessToken);
-                  console.log("access_token: log " + response.name);
-			myGameInstance.SendMessage('GoogleManager', 'callbackFunctionName', response.name);
+				var res = JSON.stringify(response);
+				console.log("access_token: " + accessToken);
+                  	console.log("access_token: log " + response.name);
+				myGameInstance.SendMessage('GoogleManager', 'callbackFunctionName', res);
 			}
 			);
 			child.close();
